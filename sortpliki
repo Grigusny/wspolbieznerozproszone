@@ -1,1 +1,106 @@
 sortowanie plikow i ich zawartosci, wczytanie plikow przydzielanie pamieci dla poszczegolnych plkow, zeby nie rezerwowalo duzo pamieci dla malych plikow itd plikow posortowanie zawartosci w plikach
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class Main  {
+
+	public static void main(String[] args) {
+		ArrayList<Sortowanie> listaSortowania = new ArrayList<>();
+		ArrayList<File> listaPlikow = new ArrayList<>();
+		File folder = new File("plikiSort");
+		folder.mkdir();
+		for(int j=0;j<20;j++) {
+			listaPlikow.add(stworzPlik(j+1));
+			}
+		
+		for(int j=0;j<20;j++) {
+			Sortowanie sortowanie = new Sortowanie(listaPlikow.get(j));
+			listaSortowania.add(sortowanie);
+			}
+		
+			ExecutorService executor = Executors.newFixedThreadPool(4);
+			try {
+				executor.invokeAll(listaSortowania);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			executor.shutdown();
+	}
+
+	
+	public static File stworzPlik (int numer) {
+		File plik = new File("plikiSort/plik"+numer+".txt");
+		int iloscLiczb = ThreadLocalRandom.current().nextInt(100, 1000001);
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(plik));
+			for(int i=0;i<iloscLiczb;i++) {
+				int wartoscLiczby = ThreadLocalRandom.current().nextInt(100, 1000001);
+				bufferedWriter.write(wartoscLiczby+System.getProperty("line.separator"));
+			}
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
+				return plik;
+	}
+}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.concurrent.Callable;
+
+public class Sortowanie implements Callable<Integer> {
+
+	File plik;
+	private BufferedReader bufferedReader;
+	private BufferedWriter bufferedWriter;
+	public Sortowanie(File plik) {
+		this.plik = plik;
+	}
+	public Integer call() {
+		ArrayList<Integer> lista = new ArrayList<>();
+		
+		try {
+			bufferedReader = new BufferedReader(new FileReader(plik));
+			String tmp;
+ 			while((tmp=bufferedReader.readLine())!=null) {
+ 				lista.add(Integer.parseInt(tmp));
+			}
+ 			Collections.sort(lista);
+ 			bufferedWriter = new BufferedWriter(new FileWriter(plik));
+ 			for(int k=0;k<lista.size();k++) {
+ 				bufferedWriter.write(lista.get(k)+System.getProperty("line.separator"));
+ 			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return 1;	
+	}	
+}
