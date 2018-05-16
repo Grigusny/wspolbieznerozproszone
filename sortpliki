@@ -25,7 +25,7 @@ public class Main  {
 			listaSortowania.add(sortowanie);
 			}
 		
-			ExecutorService executor = Executors.newFixedThreadPool(4);
+			ExecutorService executor = Executors.newFixedThreadPool(4); // executor definicja //
 			try {
 				executor.invokeAll(listaSortowania);
 			} catch (InterruptedException e) {
@@ -73,7 +73,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-public class Sortowanie implements Callable<Integer> {
+public class Sortowanie implements Callable<Integer> { // dlaczego callable, a nie runnable roznica ew inne metody rozwiazania niz executor//
 
 	File plik;
 	private BufferedReader bufferedReader;
@@ -81,7 +81,7 @@ public class Sortowanie implements Callable<Integer> {
 	public Sortowanie(File plik) {
 		this.plik = plik;
 	}
-	public Integer call() {
+	public Integer call() { // dzialanie funkcji call //
 		ArrayList<Integer> lista = new ArrayList<>();
 		
 		try {
@@ -93,7 +93,7 @@ public class Sortowanie implements Callable<Integer> {
  			Collections.sort(lista);
  			bufferedWriter = new BufferedWriter(new FileWriter(plik));
  			for(int k=0;k<lista.size();k++) {
- 				bufferedWriter.write(lista.get(k)+System.getProperty("line.separator"));
+ 				bufferedWriter.write(lista.get(k)+System.getProperty("line.separator")); // co to jest get.property jak dziala //
  			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
