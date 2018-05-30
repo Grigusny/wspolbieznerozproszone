@@ -73,7 +73,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.Callable;
 
-public class Sortowanie implements Callable<Integer> { // dlaczego callable, a nie runnable roznica ew inne metody rozwiazania niz executor//
+public class Sortowanie implements Callable<Integer> { // dlaczego callable, a nie runnable roznica ew inne metody rozwiazania niz executor Runnable'a z tą różnicą, że Callable jest interfejsem generycznym, zdolnym do zwracania dowolnego typu wyników. //
 
 	File plik;
 	private BufferedReader bufferedReader;
