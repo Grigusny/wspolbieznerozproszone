@@ -93,7 +93,7 @@ public class Sortowanie implements Callable<Integer> { // dlaczego callable, a n
  			Collections.sort(lista);
  			bufferedWriter = new BufferedWriter(new FileWriter(plik));
  			for(int k=0;k<lista.size();k++) {
- 				bufferedWriter.write(lista.get(k)+System.getProperty("line.separator")); // co to jest get.property jak dziala //
+ 				bufferedWriter.write(lista.get(k)+System.getProperty("line.separator")); // co to jest get.property jak dziala getProperty(String key), odpowiednio ustawiająca i pobierająca właściwość o zadanym kluczu. Metoda wczytująca przeszukuje mapę, jeśli nie znajdzie danego klucza szuka dalej w wartościach domyślnych. W przypadku dalszego niepowodzenia poszukiwania zadanego klucza, metoda na wyjściu dajenull. ///
  			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
