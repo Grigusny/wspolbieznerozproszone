@@ -26,7 +26,7 @@ public class Main  {
 			}
 		
 			ExecutorService executor = Executors.newFixedThreadPool(4); // executor definicja Wykonawca, prowadzący pulę wątków o zadanych maksymalnych rozmiarach (Executors.newFixedThreadPool()),
-Wykonawca, prowadzący pulę wątków o dynamicznych rozmiarach //
+Wykonawca, prowadzący pulę wątków o dynamicznych rozmiarach — to najlepsza metoda na uruchamianie własnych wątków — pozwala nam tworzyć pule wątków, delegować im zadania, tworzyć zadania cykliczne, kończyć pracę wątków w kontrolowany sposób i wiele więcej; tą metodą zajmiemy się w dzisiejszej lekcji //
 			try {
 				executor.invokeAll(listaSortowania);
 			} catch (InterruptedException e) {
