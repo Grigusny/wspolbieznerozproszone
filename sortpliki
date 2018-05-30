@@ -82,7 +82,7 @@ public class Sortowanie implements Callable<Integer> { // dlaczego callable, a n
 	public Sortowanie(File plik) {
 		this.plik = plik;
 	}
-	public Integer call() { // dzialanie funkcji call //
+	public Integer call() { // dzialanie funkcji call wywołuje funkcję z zadanym kontekstem i argumentami. //
 		ArrayList<Integer> lista = new ArrayList<>();
 		
 		try {
