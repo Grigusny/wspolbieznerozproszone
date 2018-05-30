@@ -25,7 +25,8 @@ public class Main  {
 			listaSortowania.add(sortowanie);
 			}
 		
-			ExecutorService executor = Executors.newFixedThreadPool(4); // executor definicja //
+			ExecutorService executor = Executors.newFixedThreadPool(4); // executor definicja Wykonawca, prowadzący pulę wątków o zadanych maksymalnych rozmiarach (Executors.newFixedThreadPool()),
+Wykonawca, prowadzący pulę wątków o dynamicznych rozmiarach //
 			try {
 				executor.invokeAll(listaSortowania);
 			} catch (InterruptedException e) {
