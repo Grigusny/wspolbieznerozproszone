@@ -1,0 +1,88 @@
+import java.awt.*;
+
+public class Main {
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> new Grafika("Przeciąganie liny")); //odpalenie w osobnym wątku klasy rysującej okienko gry na ekranie
+    }
+}
+
+
+
+
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class Grafika extends JFrame {
+    private JProgressBar progressBar; //deklaracja progress bara
+    private Nasluchiwacz nasluchiwacz; //deklaracja nasłuchiwacza klawiszy
+
+    public Grafika(String title) throws HeadlessException {
+        super(title); //konstruktor ustawiający tytuł na podany w Main
+        rysuj(); //rysuje elementy w oknie
+    }
+
+    private void rysuj() {
+        nasluchiwacz = new Nasluchiwacz(); //inicjalizacja nasłuchiwacza
+
+        JPanel panel = new JPanel(); //tworzy nowy panel
+        panel.setLayout(new BorderLayout()); //ustawia layout "BorderLayout"
+
+        progressBar = new JProgressBar(); //inicjalizacja progress bara
+        progressBar.setMaximum(100); //ustawia max na 100
+        progressBar.setValue(50); //ustawia wartość pocżątkową na 50
+        panel.add(progressBar); //dodaje progress bar do panelu (a ponieważ to BorderLayout, to element zostaje rozciągnięty)
+
+        add(panel); //dodaje panel do głównego okna
+        setDefaultCloseOperation(EXIT_ON_CLOSE); //ustawia wyłączenie programu w reakcji na klik X
+        setSize(300, 200); //ustawia rozmiar na 300px szerokości, 200 wysokości
+        addKeyListener(nasluchiwacz); //ustawia klasę nasłuchującą do głównego okna
+        setVisible(true); //ustawia widoczność głównego okna
+    }
+
+    private void wyswietlOkno(String strona) {
+        JOptionPane.showMessageDialog(this, "Wygrała strona " + strona);
+        removeKeyListener(nasluchiwacz); //wyłącza nasłuchiwanie na wciśnięcie klawiszy po skończonej grze
+    }
+
+    //tworzy prywatną klasę wewnętrzną (ponieważ nigdzie indziej nie będzie potrzebny jej egzemplarz
+    // i żeby mieć łatwy dostęp do zmiennych klasy nadrzędnej) nasłuchującą wciśnięć klawiszy
+    private class Nasluchiwacz implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) { //reakcja na klawisz podniesiony po wciśnięciu
+            switch (e.getKeyCode()) {
+                case KeyEvent.VK_A: //reakcja na klawisz A
+                    progressBar.setValue(progressBar.getValue() + 1); //zwiększa wartość na progress barze
+                    if(progressBar.getValue() == 100) {
+                        wyswietlOkno("lewa"); //wyświetla okienko o wygranej lewej stronie
+                    }
+                    break;
+                case KeyEvent.VK_L: //reakcja na klawisz L
+                    progressBar.setValue(progressBar.getValue() - 1); //zmniejsza wartość na progress barze
+                    if(progressBar.getValue() == 0) {
+                        wyswietlOkno("prawa"); //wyświetla okienko o wygranej prawej stronie
+                    }
+                    break;
+            }
+        }
+    }
+}
+
+
+
+
+
+
