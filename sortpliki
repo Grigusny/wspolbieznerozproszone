@@ -105,3 +105,74 @@ public class Sortowanie implements Callable<Integer> { // dlaczego callable, a n
 		return 1;	
 	}	
 }
+a invokeAll powoduje, idą po kolei z listy taski do wykonania na 4 watkach
+no własnie tym się różni
+lista plikow to po prostu lista plików
+a lista sortowania to lista zadan do wykonania
+dlatego executor sie wykrzacza kiedy dajesz liste plikow
+
+ Callable ponieważ metoda call wraca return 1
+a zwykły wątek tego nie umożliwia
+zamiast metody run masz call
+
+try catch to do łapania wyjątków jak dobrze to rozumiem to  działasz ma pikach w trakcie działania programu możesz stracić dostęp do tego pliku i a by nie wysypać całej aplikacji łapiemy wyjątek i w twoim wypadku wyświetlamy informacje  wyjątku ale program dalej działa bez tego porostu by się wysypał
+Ok
+
+odnośnie System.getProperty("line.separator")
+No
+
+to jest od separatora linii pobiera to znak tego separatora z danego systemu na którym jest uruchomimy program
+np windows ma coś takiego \r\n
+na linux \n
+i aby program działał poprawnie na każdym systemie pobiera się info o tym separatorze
+Ta
+Ale pytal jaka wartosc
+I dlaczego jak zmienic integer
+Na double
+O nie dziala juz ten return
+
+zwraca 1
+Wiem
+
+pytanie w którym miejscu zmieniłeś
+public Integer call()
+Na double
+
+implements Callable<Integer> jeszcze tutaj zmień
+i powinno działać
+tak my się przynajmniej wydaję
+
+dlaczego jak zmieni
+Integer na double
+Dlaczego nie dziala
+I tak pewnie by mnie zapytal czemu
+
+należy też pamiętać że integer a Integer to nie to samo tak samo jest z Double double
+
+ zmienil na Double
+
+nazwy pisane z Wielkiej litery to typy referencyjne a z małej to typy prymitywne
+np jak masz int a ; i nic tam nie wstawisz to masz tam 0 a jeżeli masz Integer a; i nic tam nie wstawisz to masz null
+
+Zarządzanie wątkami (Executor)
+Pakiet java.util.concurrent oferuje narzędzia do zarządzania pulami wątków, pozwalające na oddzielenie wątku od wykonywanej przez niego pracy.
+
+Pracę, która ma tylko efekty uboczne, reprezentuje obiekt klasy implementującej interfejs java.lang.Runnable. Praca, której efektem jest obliczenie wartości, jest reprezentowana przez obiekt klasy implementującej interfejs java.util.concurrent.Callable<V> z metodą
+
+V call() throws Exception
+W klasie java.util.concurrent.Executors metoda
+
+static ExecutorService newFixedThreadPool(int nThreads)
+daje obiekt klasy java.util.concurrent.ExecutorService reprezentujący pulę nThreads wątków.
+
+Pula wątków ma metodę
+
+<V> Future<V> submit(Callable<V> task)
+zlecającą wykonanie obliczenia task. Daje ona obiekt klasy java.util.concurrent.Future<V> z metodą
+
+V get() throws InterruptedException, ExecutionException
+czekającą na zakończenie obliczenia i odczytującą jego wynik. Jeśli obliczenie zostało przerwane wyjątkiem, dostajemy wyjątek klasy java.util.concurrent.ExecutionException.
+
+Pracę puli wątków kończy metoda
+
+void shutdown()
